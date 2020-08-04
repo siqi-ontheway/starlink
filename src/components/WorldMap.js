@@ -147,18 +147,19 @@ class WorldMap extends Component {
     }
     track(data) {
         console.log('2 -> ', data)
-        const { duration } = this.props.observerData;
-        const len = data[0].positions.length;
+        const { duration:[startTime, endTime] } = this.props.observerData;
+        const len = endTime * 60;
         const { context2 } = this.state.map;
         let now = new Date();
 
-        let i = duration[0] * 60;
+        let i = startTime*60;
         let timer = setInterval(() => {
             // how much time passed from the start?
             let timePassed = Date.now() - now;
 
-            if(i === duration[0] * 60){
-                now.setSeconds(now.getSeconds());
+            if(i === startTime*60){
+                now.setTime(now.getTime() + i);
+                
             }
 
             let time = new Date(now.getTime() + 60 * timePassed);
